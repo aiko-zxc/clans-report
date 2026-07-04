@@ -33,9 +33,9 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ### [IN PROGRESS] CR-2 — DB schema + migrations
 
-- [ ] `lib/db/schema.ts` per [db.md](./db.md) (all 6 tables, indexes, constraints)
-- [ ] Migrations `0000_init`, `0001_bungie_snapshots` — generated SQL reviewed against db.md
-- [ ] `lib/db/client.ts` (drizzle + `pg` Pool); local `postgres:16` via Docker
+- [x] `lib/db/schema.ts` per [db.md](./db.md) (all 6 tables, indexes, constraints)
+- [x] Migrations `0000_init`, `0001_bungie_snapshots` — generated SQL reviewed against db.md
+- [x] `lib/db/client.ts` (drizzle + `pg` Pool); local `postgres:17` via Docker
 - [ ] Provision Neon + set `DATABASE_URL` in Vercel + apply migrations to it — keeps prod alive as DB-touching code lands (pulled forward from CR-23 for the push-often loop)
 
 **DoD:** `drizzle-kit migrate` applies cleanly to a fresh local DB **and** to Neon; generated SQL matches db.md.
@@ -51,7 +51,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ### [TO DO] CR-4 — Test harness
 
-- [ ] Vitest `globalSetup`: one `postgres:16` Testcontainer per run, migrations applied once
+- [ ] Vitest `globalSetup`: one `postgres:17` Testcontainer per run, migrations applied once
 - [ ] Truncate-between-tests helper; MSW node server stub + first Bungie response factory
 - [ ] One smoke integration test (insert via repo → read back)
 - [ ] `ci.yml` written (test + migrate jobs) — verified later in CR-23

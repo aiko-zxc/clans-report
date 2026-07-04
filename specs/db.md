@@ -1,6 +1,6 @@
 # Clans Report — Database Schema
 
-Postgres (Neon). Drizzle ORM for access. drizzle-kit for migrations. UUID PKs across the board, `text` over `varchar`, `int` over `smallint`. All app tables include `created_at`, `updated_at`, `version` for optimistic locking on mutable rows.
+Postgres 17 (Neon; local + Testcontainers pinned to the same major). Drizzle ORM for access. drizzle-kit for migrations. UUID PKs across the board, `text` over `varchar`, `int` over `smallint`. All app tables include `created_at`, `updated_at`, `version` for optimistic locking on mutable rows.
 
 ## Conventions
 

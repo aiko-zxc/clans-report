@@ -305,7 +305,7 @@ No profiles — environment variables per environment:
 
 **Integration-first**: integration tests are the backbone; unit tests only for corner cases where an integration test is overkill. Vitest everywhere.
 
-- **DB:** one `postgres:16` **Testcontainer per test run** (vitest `globalSetup` — the JVM-static container analog). drizzle-kit migrations applied once; every table truncated in `beforeEach`.
+- **DB:** one `postgres:17` **Testcontainer per test run** (vitest `globalSetup` — the JVM-static container analog). drizzle-kit migrations applied once; every table truncated in `beforeEach`.
 - **Bungie:** always mocked with **MSW** (node server) — the WireMock analog. Handlers built per-test from response factories (`groupResponse({...})`, `membersResponse([...])`); tests can assert on intercepted requests.
 - **Route handlers** are invoked directly — import the exported `POST`/`GET` from the route file, call it with a constructed `Request`, assert on the `Response` + DB rows. Grey-box, from the contract in.
 - **Sessions:** mock `lib/auth`'s `auth()` (vi.mock) to return a seeded session — the `oauth2Login()` post-processor analog. The real OAuth dance is not integration-tested (it's Auth.js's code); our `jwt`/`signIn` callbacks are unit-tested with fake Bungie payloads via MSW.
@@ -407,7 +407,7 @@ jobs:
 ## Local development
 
 1. Register a **dev application** at bungie.net/en/Application: redirect `https://127.0.0.1:3000/api/auth/callback/bungie` (Bungie requires HTTPS and rejects the `localhost` hostname — `127.0.0.1` works; see auth.md).
-2. DB: `docker run -p 5432:5432 postgres:16` or a Neon dev branch. `npx drizzle-kit migrate`, then `npx tsx scripts/seed.ts` for board data.
+2. DB: `docker run -p 5432:5432 postgres:17` or a Neon dev branch. `npx drizzle-kit migrate`, then `npx tsx scripts/seed.ts` for board data.
 3. `.env.local` from `.env.example`.
 4. `next dev --experimental-https` — Next generates a locally-trusted cert; open `https://127.0.0.1:3000`. Full OAuth + publish flow works locally against real Bungie; **no tunnel needed** (the OAuth redirect is a browser-side 302 — Bungie's servers never connect to your machine).
 
