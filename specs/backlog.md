@@ -31,12 +31,12 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** `next dev` serves the placeholder; commit authored by the personal identity.
 
-### [IN PROGRESS] CR-2 — DB schema + migrations
+### [DONE] CR-2 — DB schema + migrations
 
 - [x] `lib/db/schema.ts` per [db.md](./db.md) (all 6 tables, indexes, constraints)
 - [x] Migrations `0000_init`, `0001_bungie_snapshots` — generated SQL reviewed against db.md
 - [x] `lib/db/client.ts` (drizzle + `pg` Pool); local `postgres:17` via Docker
-- [ ] Provision Neon + set `DATABASE_URL` in Vercel + apply migrations to it — keeps prod alive as DB-touching code lands (pulled forward from CR-23 for the push-often loop)
+- [x] Provision Neon + set `DATABASE_URL` in Vercel + apply migrations to it — keeps prod alive as DB-touching code lands (pulled forward from CR-23 for the push-often loop)
 
 **DoD:** `drizzle-kit migrate` applies cleanly to a fresh local DB **and** to Neon; generated SQL matches db.md.
 
