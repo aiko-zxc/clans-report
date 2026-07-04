@@ -22,10 +22,10 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ## Phase A — Foundation
 
-### [TO DO] CR-1 — Project scaffold
+### [DONE] CR-1 — Project scaffold
 
-- [ ] Git identity: `~/.gitconfig-personal` + conditional include for `~/Projects/pet/`; `git init`; verify authorship with a test commit (`git log --format='%an %ae'`)
-- [ ] `create-next-app` (TypeScript, App Router), strict TS, placeholder home page
+- [x] Git identity: `~/.gitconfig-personal` + conditional include for `~/Projects/pet/`; `git init`; verify authorship with a test commit (`git log --format='%an %ae'`)
+- [x] `create-next-app` (TypeScript, App Router), strict TS, placeholder home page
 
 **DoD:** `next dev` serves the placeholder; commit authored by the personal identity.
 
