@@ -1,0 +1,7 @@
+{
+  "rest-client.environmentVariables": {
+    "local": { "baseUrl": "http://localhost:3000" },
+    "local-https": { "baseUrl": "https://127.0.0.1:3000" },
+    "prod": { "baseUrl": "https://clans-report.vercel.app" }
+  }
+}

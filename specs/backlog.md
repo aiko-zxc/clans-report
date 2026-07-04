@@ -2,11 +2,13 @@
 
 Thin, review-sized tickets: **one ticket = one local commit (or branch) that gets reviewed before the next ticket starts.** Every ticket still ends with something runnable locally.
 
-**Local-first constraint:** development happens fully locally (dev Bungie app on `127.0.0.1`, local Postgres, manual cron runs); GitHub / Vercel / CI / scheduled crons all land in the final ticket **CR-23 (Ship)**. Git is local from day one; only the **push** waits for CR-23.
+**Push-often workflow (set up in CR-1):** repo, deploy key, and Vercel are already live — every push to `main` auto-deploys to https://clans-report.vercel.app. So we commit+push per ticket and watch prod, rather than deferring git to the end. What still waits for CR-23: Neon (prod DB), CI wiring, branch protection, cron workflow enablement, prod Bungie app.
 
-**Git identity:** the machine's global git config is the work account — commits here must use the personal identity via a conditional include (`[includeIf "gitdir:~/Projects/pet/"]` → `~/.gitconfig-personal`, GitHub noreply email). Verify `git log` authorship before the first push.
+**Git identity:** the machine's global git config is the work account; commits here use the personal identity via a conditional include (`[includeIf "gitdir:~/Projects/pet/"]` → `~/.gitconfig-personal`, GitHub noreply email). ✅ done in CR-1.
 
-**Push auth — no personal GitHub login on the work machine:** a repo-scoped **deploy key** with write access (`~/.ssh/clans_report_deploy` + `Host github-clans` alias; remote `git@github-clans:<user>/clans-report.git`). The laptop can only push/pull this one repo; everything account-level (create repo, add the deploy key, merge PRs, Actions logs, secrets) happens in a browser on personal devices.
+**Push auth — no personal GitHub login on the work machine:** repo-scoped **deploy key** with write access (`~/.ssh/clans_report_deploy`, `Host github-clans` alias, remote `git@github-clans:aiko-zxc/clans-report.git`). ✅ done in CR-1. Account-level actions (Vercel, Neon, secrets, branch protection) happen in a browser on personal devices.
+
+**Caveat — prod needs env vars from CR-2 on:** once a page/endpoint touches the DB, prod will error until `DATABASE_URL` (Neon) is set in Vercel. CR-2 includes provisioning Neon early so prod keeps working through the push-often loop.
 
 **Status is tracked in the ticket heading:** `[TO DO]` → `[IN PROGRESS]` → `[DONE]` (plus `[BLOCKED — <reason>]` when stuck).
 
@@ -34,8 +36,9 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 - [ ] `lib/db/schema.ts` per [db.md](./db.md) (all 6 tables, indexes, constraints)
 - [ ] Migrations `0000_init`, `0001_bungie_snapshots` — generated SQL reviewed against db.md
 - [ ] `lib/db/client.ts` (drizzle + `pg` Pool); local `postgres:16` via Docker
+- [ ] Provision Neon (browser, personal device) + set `DATABASE_URL` in Vercel + apply migrations to it — keeps prod alive as DB-touching code lands (pulled forward from CR-23 for the push-often loop)
 
-**DoD:** `drizzle-kit migrate` applies cleanly to a fresh local DB; generated SQL matches db.md.
+**DoD:** `drizzle-kit migrate` applies cleanly to a fresh local DB **and** to Neon; generated SQL matches db.md.
 
 ### [TO DO] CR-3 — Core lib
 
