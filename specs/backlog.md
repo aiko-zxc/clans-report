@@ -40,12 +40,12 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** `drizzle-kit migrate` applies cleanly to a fresh local DB **and** to Neon; generated SQL matches db.md.
 
-### [TO DO] CR-3 — Core lib
+### [DONE] CR-3 — Core lib
 
-- [ ] `lib/errors.ts`: `ErrorCode` map per api.md, `AppError`, `problem()`, `handled()` wrapper
-- [ ] `lib/taxonomy.ts`: playstyle tags, languages, regions, platforms, membership types, staleness threshold
-- [ ] `lib/validation.ts`: zod schemas per [api.md](./api.md) (search / publish / edit) incl. min≤max refine
-- [ ] Unit tests: zod edge cases, Discord URL regex, error mapping
+- [x] `lib/errors.ts`: `ErrorCode` map per api.md, `AppError`, `problem()`, `handled()` wrapper
+- [x] `lib/taxonomy.ts`: playstyle tags, languages, regions, platforms, membership types, staleness threshold
+- [x] `lib/validation.ts`: zod schemas per [api.md](./api.md) (search / publish / edit) incl. min≤max refine
+- [x] Unit tests: zod edge cases, Discord URL regex, error mapping
 
 **DoD:** `npm test` green; pure code — reviewable without running anything.
 
