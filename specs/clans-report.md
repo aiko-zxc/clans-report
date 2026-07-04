@@ -127,7 +127,7 @@ All filters are AND-combined across categories; multi-select within a category i
 
 - Standard OAuth 2.0 authorization code flow, via Auth.js — see [auth.md](./auth.md).
 - App registered at `bungie.net/en/Application` → get `client_id` / `client_secret`.
-- Scopes: `ReadBasicUserProfile`, `ReadGroups` (enough to list user's clans and verify founder role).
+- Scopes: none beyond Bungie's default basic-profile grant. Identity comes from `GetMembershipsForCurrentUser` (covered by the default grant); the founder check uses `GetGroupsForMember` which is API-key-only (public clan data). The portal's only groups scope is *admin/write* ("Administrate groups and clans") — deliberately NOT requested (least privilege).
 - Session: signed JWT cookie (Auth.js), 30 days. No session table.
 - Logout: clears the cookie; Bungie session untouched.
 - Access token used once at login for identity, then discarded — never stored, never sent to browser.

@@ -36,7 +36,7 @@ AUTH_SECRET           # signs/encrypts the Auth.js JWT cookie
 
 ## User → Us
 
-Standard OAuth 2.0 authorization code flow, used **only as identity proof**. No long-lived user tokens are stored.
+Standard OAuth 2.0 authorization code flow, used **only as identity proof**. No long-lived user tokens are stored. No extra OAuth scopes are requested — Bungie's default basic-profile grant covers `GetMembershipsForCurrentUser`, and the founder check is API-key-only (see clans-report.md auth flow).
 
 ### Implementation: Auth.js (next-auth v5)
 
