@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:seed": "tsx scripts/seed.ts",
-    "db:reset": "docker compose up -d --wait && drizzle-kit migrate && tsx scripts/seed.ts"
+    "db:up": "docker compose up -d --wait",
+    "db:setup": "npm run db:up && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",

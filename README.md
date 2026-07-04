@@ -18,33 +18,34 @@ tracked in [`specs/backlog.md`](./specs/backlog.md).
 ```bash
 npm install
 cp .env.example .env        # then fill BUNGIE_API_KEY (auth vars come later, in CR-12)
-npm run db:reset            # starts Postgres, applies migrations, seeds sample data
+npm run db:setup            # start Postgres + migrate + seed (see below)
 npm run dev                 # http://localhost:3000
 ```
 
-`db:reset` runs `docker compose up -d --wait && drizzle-kit migrate && tsx scripts/seed.ts`.
+`db:setup` just chains the three DB steps below — run it once to get going.
 
-## Data
+## Database
 
-Local dev only — production fills with real clans via the owner flow, and is never seeded.
-
-```bash
-npm run db:seed             # (re)seed ~12 varied clans — idempotent, safe to re-run
-npm run db:seed -- --clear  # wipe all listing + snapshot rows
-```
-
-The seed refuses to run against a non-local database (guards against touching Neon);
-override with `-- --force` only if you really mean it.
-
-Managing the database directly:
+Each command does exactly one thing:
 
 ```bash
-docker compose up -d        # start Postgres (named volume clans-pg-data, data persists)
-docker compose down         # stop (data kept)
-docker compose down -v      # stop and delete data → next `db:reset` starts fresh
-npm run db:migrate          # apply pending migrations
-npm run db:generate         # regenerate migration SQL after editing lib/db/schema.ts
+npm run db:up         # start local Postgres (docker compose, named volume — data persists)
+npm run db:migrate    # apply pending migrations
+npm run db:seed       # load ~12 sample clans (truncates first, so it's a clean re-seed)
+npm run db:generate   # regenerate migration SQL after editing lib/db/schema.ts
+npm run db:studio     # browse the DB in Drizzle Studio
+npm run db:setup      # db:up + db:migrate + db:seed (first-time bootstrap)
 ```
+
+Common tasks:
+
+- **Refresh sample data:** `npm run db:seed` (idempotent — wipes and reloads the 12 clans).
+- **Wipe listings without reloading:** `npm run db:seed -- --clear`.
+- **Start completely fresh (drop the volume):** `docker compose down -v && npm run db:setup`.
+
+Seeding is local-dev only: the script refuses to run against a non-local database
+(guards against touching Neon) unless you pass `-- --force`. Production fills with
+real clans via the owner flow and is never seeded.
 
 ## Tests
 
