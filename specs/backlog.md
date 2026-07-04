@@ -81,11 +81,11 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 - [x] `GET /api/clans/{bungieGroupId}`: full `ClanDetail` (members, founder resolution, `dataFetchedAt`), `404 LISTING_NOT_FOUND`
 - [x] clans.http entries (detail + 404); integration tests
 
-### [TO DO] CR-8 — Seed script (local only)
+### [DONE] CR-8 — Seed script (local only)
 
-- [ ] `scripts/seed.ts`: ~a dozen varied fake listings + snapshots (tags/languages/regions/sizes spread for filter demos)
-- [ ] Idempotent: truncates then inserts; `--clear` flag wipes listing/snapshot tables
-- [ ] Local dev only — never run against Neon. Prod fills with real clans via the owner flow (phase E).
+- [x] `scripts/seed.ts`: ~a dozen varied fake listings + snapshots (tags/languages/regions/sizes spread for filter demos)
+- [x] Idempotent: truncates then inserts; `--clear` flag wipes listing/snapshot tables
+- [x] Local dev only — never run against Neon. Prod fills with real clans via the owner flow (phase E).
 
 **DoD:** fresh local DB → seed → board API returns a believable directory.
 

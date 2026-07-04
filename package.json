@@ -11,7 +11,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:seed": "tsx scripts/seed.ts",
+    "db:reset": "docker compose up -d --wait && drizzle-kit migrate && tsx scripts/seed.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
