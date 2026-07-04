@@ -31,7 +31,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** `next dev` serves the placeholder; commit authored by the personal identity.
 
-### [TO DO] CR-2 — DB schema + migrations
+### [IN PROGRESS] CR-2 — DB schema + migrations
 
 - [ ] `lib/db/schema.ts` per [db.md](./db.md) (all 6 tables, indexes, constraints)
 - [ ] Migrations `0000_init`, `0001_bungie_snapshots` — generated SQL reviewed against db.md
@@ -155,7 +155,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 - [ ] `/publish` per Figma: read-only Bungie preview + editorial fields (Discord URL, language, region, tags, platforms), field-level 400 errors
 - [ ] Renders correctly at mobile width
 
-### [TO DO] CR-20 — Manage page UI
+### [IN PROGRESS] CR-20 — Manage page UI
 
 - [ ] `/manage` per Figma: prefill from cached `/api/me.listing`, save with version echo, success toast
 - [ ] Delist confirmation modal (hard-delete warning)
@@ -166,7 +166,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ## Phase F — Crons
 
-### [TO DO] CR-21 — Basic refresh (S1 + S3)
+### [IN PROGRESS] CR-21 — Basic refresh (S1 + S3)
 
 - [ ] `lib/services/sync-service.ts`: basic refresh (founder compare → auto-delist transaction), 429 policy (sleep `ThrottleSeconds`, retry once, exit 0 on repeat), per-listing error isolation, summary log line
 - [ ] `scripts/refresh-basic.ts` (`p-limit`, `BUNGIE_CONCURRENCY`) + `refresh-basic.yml` (6h, `workflow_dispatch`, `concurrency: bungie-refresh`) — yml verified in CR-23
@@ -174,7 +174,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** `npx tsx scripts/refresh-basic.ts` runs clean against local DB + real Bungie.
 
-### [TO DO] CR-22 — Members refresh (S2)
+### [IN PROGRESS] CR-22 — Members refresh (S2)
 
 - [ ] Members refresh in sync-service: upsert + delete-stale in one transaction; 404 → auto-delist
 - [ ] `scripts/refresh-members.ts` + `refresh-members.yml` (24h, offset)
@@ -182,7 +182,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ## Phase G — Ship
 
-### [TO DO] CR-23 — Launch hardening
+### [IN PROGRESS] CR-23 — Launch hardening
 
 Repo, deploy key, Vercel auto-deploy, and prod URL were all set up in CR-1; Neon lands in CR-2. This ticket is what's left to call it launched.
 

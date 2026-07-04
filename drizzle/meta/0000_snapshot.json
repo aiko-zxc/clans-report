@@ -1,0 +1,562 @@
+{
+  "id": "0e79fa4e-5941-4c9d-aba8-b32a13856c83",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.app_user": {
+      "name": "app_user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "bungie_net_id": {
+          "name": "bungie_net_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "display_name_code": {
+          "name": "display_name_code",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_login_at": {
+          "name": "last_login_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "app_user_bungie_net_id_uk": {
+          "name": "app_user_bungie_net_id_uk",
+          "columns": [
+            {
+              "expression": "bungie_net_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bungie_clan_snapshot": {
+      "name": "bungie_clan_snapshot",
+      "schema": "",
+      "columns": {
+        "bungie_group_id": {
+          "name": "bungie_group_id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "motto": {
+          "name": "motto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "banner_url": {
+          "name": "banner_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "member_count": {
+          "name": "member_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "clan_level": {
+          "name": "clan_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "clan_level_max": {
+          "name": "clan_level_max",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "membership_type": {
+          "name": "membership_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "founder_destiny_id": {
+          "name": "founder_destiny_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "founder_membership_type": {
+          "name": "founder_membership_type",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bungie_created_at": {
+          "name": "bungie_created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fetched_at": {
+          "name": "fetched_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "bungie_clan_snapshot_member_count_idx": {
+          "name": "bungie_clan_snapshot_member_count_idx",
+          "columns": [
+            {
+              "expression": "member_count",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "bungie_clan_snapshot_membership_type_idx": {
+          "name": "bungie_clan_snapshot_membership_type_idx",
+          "columns": [
+            {
+              "expression": "membership_type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bungie_member_snapshot": {
+      "name": "bungie_member_snapshot",
+      "schema": "",
+      "columns": {
+        "bungie_group_id": {
+          "name": "bungie_group_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "destiny_id": {
+          "name": "destiny_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "membership_type": {
+          "name": "membership_type",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "display_name_code": {
+          "name": "display_name_code",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "icon_path": {
+          "name": "icon_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fetched_at": {
+          "name": "fetched_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "bungie_member_snapshot_group_idx": {
+          "name": "bungie_member_snapshot_group_idx",
+          "columns": [
+            {
+              "expression": "bungie_group_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "bungie_member_snapshot_bungie_group_id_destiny_id_pk": {
+          "name": "bungie_member_snapshot_bungie_group_id_destiny_id_pk",
+          "columns": [
+            "bungie_group_id",
+            "destiny_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.clan_listing": {
+      "name": "clan_listing",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "bungie_group_id": {
+          "name": "bungie_group_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_user_id": {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_destiny_id": {
+          "name": "owner_destiny_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "owner_membership_type": {
+          "name": "owner_membership_type",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discord_url": {
+          "name": "discord_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "language": {
+          "name": "language",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "region": {
+          "name": "region",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version": {
+          "name": "version",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "clan_listing_bungie_group_id_uk": {
+          "name": "clan_listing_bungie_group_id_uk",
+          "columns": [
+            {
+              "expression": "bungie_group_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "clan_listing_owner_user_id_idx": {
+          "name": "clan_listing_owner_user_id_idx",
+          "columns": [
+            {
+              "expression": "owner_user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "clan_listing_updated_at_idx": {
+          "name": "clan_listing_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "clan_listing_owner_user_id_app_user_id_fk": {
+          "name": "clan_listing_owner_user_id_app_user_id_fk",
+          "tableFrom": "clan_listing",
+          "tableTo": "app_user",
+          "columnsFrom": [
+            "owner_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.clan_listing_platform": {
+      "name": "clan_listing_platform",
+      "schema": "",
+      "columns": {
+        "clan_listing_id": {
+          "name": "clan_listing_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "platform": {
+          "name": "platform",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "clan_listing_platform_platform_idx": {
+          "name": "clan_listing_platform_platform_idx",
+          "columns": [
+            {
+              "expression": "platform",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "clan_listing_platform_clan_listing_id_clan_listing_id_fk": {
+          "name": "clan_listing_platform_clan_listing_id_clan_listing_id_fk",
+          "tableFrom": "clan_listing_platform",
+          "tableTo": "clan_listing",
+          "columnsFrom": [
+            "clan_listing_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "clan_listing_platform_clan_listing_id_platform_pk": {
+          "name": "clan_listing_platform_clan_listing_id_platform_pk",
+          "columns": [
+            "clan_listing_id",
+            "platform"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.clan_listing_playstyle_tag": {
+      "name": "clan_listing_playstyle_tag",
+      "schema": "",
+      "columns": {
+        "clan_listing_id": {
+          "name": "clan_listing_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tag": {
+          "name": "tag",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "clan_listing_playstyle_tag_tag_idx": {
+          "name": "clan_listing_playstyle_tag_tag_idx",
+          "columns": [
+            {
+              "expression": "tag",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "clan_listing_playstyle_tag_clan_listing_id_clan_listing_id_fk": {
+          "name": "clan_listing_playstyle_tag_clan_listing_id_clan_listing_id_fk",
+          "tableFrom": "clan_listing_playstyle_tag",
+          "tableTo": "clan_listing",
+          "columnsFrom": [
+            "clan_listing_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "clan_listing_playstyle_tag_clan_listing_id_tag_pk": {
+          "name": "clan_listing_playstyle_tag_clan_listing_id_tag_pk",
+          "columns": [
+            "clan_listing_id",
+            "tag"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
