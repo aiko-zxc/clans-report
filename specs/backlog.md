@@ -4,9 +4,9 @@ Thin, review-sized tickets: **one ticket = one local commit (or branch) that get
 
 **Push-often workflow (set up in CR-1):** repo, deploy key, and Vercel are already live — every push to `main` auto-deploys to https://clans-report.vercel.app. So we commit+push per ticket and watch prod, rather than deferring git to the end. What still waits for CR-23: Neon (prod DB), CI wiring, branch protection, cron workflow enablement, prod Bungie app.
 
-**Git identity:** the machine's global git config is the work account; commits here use the personal identity via a conditional include (`[includeIf "gitdir:~/Projects/pet/"]` → `~/.gitconfig-personal`, GitHub noreply email). ✅ done in CR-1.
+**Git identity:** commits use the personal identity (GitHub noreply email) via a per-directory conditional include. ✅ done in CR-1.
 
-**Push auth — no personal GitHub login on the work machine:** repo-scoped **deploy key** with write access (`~/.ssh/clans_report_deploy`, `Host github-clans` alias, remote `git@github-clans:aiko-zxc/clans-report.git`). ✅ done in CR-1. Account-level actions (Vercel, Neon, secrets, branch protection) happen in a browser on personal devices.
+**Push auth:** repo-scoped **deploy key** with write access (SSH host alias, remote `git@github-clans:aiko-zxc/clans-report.git`). ✅ done in CR-1.
 
 **Caveat — prod needs env vars from CR-2 on:** once a page/endpoint touches the DB, prod will error until `DATABASE_URL` (Neon) is set in Vercel. CR-2 includes provisioning Neon early so prod keeps working through the push-often loop.
 
@@ -26,7 +26,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ### [DONE] CR-1 — Project scaffold
 
-- [x] Git identity: `~/.gitconfig-personal` + conditional include for `~/Projects/pet/`; `git init`; verify authorship with a test commit (`git log --format='%an %ae'`)
+- [x] Git identity: personal identity via per-directory conditional include; verify authorship (`git log --format='%an %ae'`)
 - [x] `create-next-app` (TypeScript, App Router), strict TS, placeholder home page
 
 **DoD:** `next dev` serves the placeholder; commit authored by the personal identity.
@@ -36,7 +36,7 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 - [ ] `lib/db/schema.ts` per [db.md](./db.md) (all 6 tables, indexes, constraints)
 - [ ] Migrations `0000_init`, `0001_bungie_snapshots` — generated SQL reviewed against db.md
 - [ ] `lib/db/client.ts` (drizzle + `pg` Pool); local `postgres:16` via Docker
-- [ ] Provision Neon (browser, personal device) + set `DATABASE_URL` in Vercel + apply migrations to it — keeps prod alive as DB-touching code lands (pulled forward from CR-23 for the push-often loop)
+- [ ] Provision Neon + set `DATABASE_URL` in Vercel + apply migrations to it — keeps prod alive as DB-touching code lands (pulled forward from CR-23 for the push-often loop)
 
 **DoD:** `drizzle-kit migrate` applies cleanly to a fresh local DB **and** to Neon; generated SQL matches db.md.
 
@@ -182,15 +182,13 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ## Phase G — Ship
 
-### [TO DO] CR-23 — Ship & launch (first contact with GitHub/Vercel/Neon)
+### [TO DO] CR-23 — Launch hardening
 
-- [ ] GitHub repo (public, via web UI **from a personal device**) + deploy key with write access added there
-- [ ] Laptop: `ssh-keygen` deploy key, `~/.ssh/config` alias, `git remote add` → push; re-verify authorship (`git log --format='%an %ae' | sort -u`)
-- [ ] Neon: create project, apply migrations, seed demo data
-- [ ] Vercel import + env vars; first prod deploy
+Repo, deploy key, Vercel auto-deploy, and prod URL were all set up in CR-1; Neon lands in CR-2. This ticket is what's left to call it launched.
+
 - [ ] Verify `ci.yml` green on a test PR; branch protection on `main`
 - [ ] Enable + verify cron workflows (repo secrets, `workflow_dispatch` smoke run)
-- [ ] Prod Bungie app pointed at the Vercel domain
+- [ ] Prod Bungie app pointed at the prod domain
 - [ ] Prod smoke: board, detail, login, O1–O5; then remove seed data
 - [ ] Error pages (global error boundary, BE-down state); README (setup, env vars, requests how-to)
 - [ ] Optional: custom domain (CNAME), Vercel Analytics
