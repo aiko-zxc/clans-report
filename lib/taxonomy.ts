@@ -26,7 +26,7 @@ export const LANGUAGES = [
 
 export const REGIONS = ['AMERICAS', 'EUROPE', 'ASIA_PACIFIC'] as const;
 
-export const PLATFORMS = ['PC', 'PLAYSTATION', 'XBOX', 'EPIC_GAMES'] as const;
+export const PLATFORMS = ['PC', 'PLAYSTATION', 'XBOX'] as const;
 
 export const MEMBERSHIP_TYPES = ['OPEN', 'APPLICATION', 'CLOSED'] as const;
 

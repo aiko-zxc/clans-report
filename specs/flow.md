@@ -215,7 +215,7 @@ FE        Refetch /api/me (gets updated listing), stay on /manage, show success 
 
 **Tech notes:**
 - The manage page does **not** trigger a Bungie founder check on load — it reads the cached `/api/me.listing`. The check happens only on `PUT` (save). Brief stale-data window is acceptable; save handler 410s if needed.
-- Tags/platforms updated by full-replace (delete + insert) for simplicity. Volume is small (max ~10 tags + 4 platforms).
+- Tags/platforms updated by full-replace (delete + insert) for simplicity. Volume is small (max ~10 tags + 3 platforms).
 - Members snapshot is **not** refreshed here — it's heavy and the user can't see members on the edit page anyway. Members are refreshed by the 24h cron.
 
 ### O3. Delist (owner-initiated)

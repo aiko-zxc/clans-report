@@ -10,7 +10,7 @@ REST + JSON, served by Next.js route handlers. All endpoints under `/api/*`; Aut
 - **IDs:** strings.
   - Bungie IDs are 19-digit numeric strings.
   - Our internal IDs are UUIDs (only ever exposed for owner-facing entities).
-- **Enums:** `UPPER_SNAKE_CASE` strings — `OPEN`, `APPLICATION`, `CLOSED`, `AMERICAS`, `EUROPE`, `ASIA_PACIFIC`, `PC`, `PLAYSTATION`, `XBOX`, `EPIC_GAMES`.
+- **Enums:** `UPPER_SNAKE_CASE` strings — `OPEN`, `APPLICATION`, `CLOSED`, `AMERICAS`, `EUROPE`, `ASIA_PACIFIC`, `PC`, `PLAYSTATION`, `XBOX`.
 - **Languages and playstyle tags:** kept as their canonical display strings (`"English"`, `"Russian"`, `"PvE"`, `"Hardcore PvE"`) — these are part of the public contract; converting them to enums adds translation burden with no benefit.
 - **Auth:** JWT session cookie set by Auth.js (`authjs.session-token`, `__Secure-` prefixed on HTTPS). Anonymous requests to protected endpoints → `401`. Authenticated requests without the right ownership → `403`.
 - **Errors:** RFC 7807 `application/problem+json` via the shared `problem()` helper (see [be.md](./be.md)), with an extra `code` field for FE switching:
@@ -198,7 +198,7 @@ The server derives the clan ID from `session.foundedBungieGroupId` — no query 
   "language": "English",                         // must be in fixed taxonomy
   "region": "AMERICAS",                          // AMERICAS | EUROPE | ASIA_PACIFIC
   "tags": ["PvE", "Raids"],                      // each must be in fixed playstyle taxonomy
-  "platforms": ["PC", "PLAYSTATION"]             // each: PC | PLAYSTATION | XBOX | EPIC_GAMES
+  "platforms": ["PC", "PLAYSTATION"]             // each: PC | PLAYSTATION | XBOX
 }
 ```
 
@@ -312,7 +312,7 @@ Stable strings the FE can switch on:
 - `language`: must be one of the fixed taxonomy values (currently `English`, `Russian`, `German`, `French`, `Español`, `Ukrainian`, `Polski`).
 - `region`: enum.
 - `tags`: each must be in the fixed playstyle taxonomy. Max 9 (size of the taxonomy). Deduplicated server-side.
-- `platforms`: each enum. Max 4. Deduplicated. At least 1.
+- `platforms`: each enum. Max 3. Deduplicated. At least 1.
 - `name` filter: max 64 chars.
 - `pageSize`: 1..50; values outside are 400.
 - `minMembers` / `maxMembers`: 0..100; if both present, `min <= max`.

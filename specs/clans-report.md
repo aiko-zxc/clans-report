@@ -110,7 +110,7 @@ All filters are AND-combined across categories; multi-select within a category i
 `Americas`, `Europe`, `Asia-Pacific`
 
 **Platforms (auto from Bungie API — aggregated from member platforms):**
-`PC`, `PlayStation`, `XBOX`, `Epic Games`
+`PC`, `PlayStation`, `XBOX`
 
 **Membership type (from Bungie API):**
 `Open`, `Application`, `Closed`

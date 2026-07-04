@@ -97,7 +97,7 @@ Owner-picked platforms (moved from Bungie-derived to owner-supplied).
 ```sql
 CREATE TABLE clan_listing_platform (
   clan_listing_id    UUID NOT NULL REFERENCES clan_listing(id) ON DELETE CASCADE,
-  platform           TEXT NOT NULL,   -- 'PC' | 'PLAYSTATION' | 'XBOX' | 'EPIC_GAMES'
+  platform           TEXT NOT NULL,   -- 'PC' | 'PLAYSTATION' | 'XBOX'
   PRIMARY KEY (clan_listing_id, platform)
 );
 

@@ -141,8 +141,8 @@ export const publishListingRequest = z.object({
   }),
   language: z.enum(LANGUAGES),          // fixed taxonomy — zod enforces membership at parse time
   region: z.enum(REGIONS),
-  tags: z.array(z.enum(PLAYSTYLE_TAGS)).nonempty().max(PLAYSTYLE_TAGS.length),
-  platforms: z.array(z.enum(PLATFORMS)).nonempty().max(PLATFORMS.length),
+  tags: z.array(z.enum(PLAYSTYLE_TAGS)).min(1).max(PLAYSTYLE_TAGS.length),
+  platforms: z.array(z.enum(PLATFORMS)).min(1).max(PLATFORMS.length),
 });
 
 export const searchClansRequest = z.object({
