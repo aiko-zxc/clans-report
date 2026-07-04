@@ -81,11 +81,13 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 - [ ] `GET /api/clans/{bungieGroupId}`: full `ClanDetail` (members, founder resolution, `dataFetchedAt`), `404 LISTING_NOT_FOUND`
 - [ ] clans.http entries (detail + 404); integration tests
 
-### [TO DO] CR-8 — Seed script
+### [TO DO] CR-8 — Seed script (local only)
 
-- [ ] `scripts/seed.ts`: ~a dozen varied fake listings (tags/languages/regions/sizes spread for filter demos)
+- [ ] `scripts/seed.ts`: ~a dozen varied fake listings + snapshots (tags/languages/regions/sizes spread for filter demos)
+- [ ] Idempotent: truncates then inserts; `--clear` flag wipes listing/snapshot tables
+- [ ] Local dev only — never run against Neon. Prod fills with real clans via the owner flow (phase E).
 
-**DoD:** fresh DB → seed → board API returns a believable directory.
+**DoD:** fresh local DB → seed → board API returns a believable directory.
 
 ## Phase C — Visitor UI (any time after B)
 
@@ -189,6 +191,6 @@ Repo, deploy key, Vercel auto-deploy, and prod URL were all set up in CR-1; Neon
 - [ ] Verify `ci.yml` green on a test PR; branch protection on `main`
 - [ ] Enable + verify cron workflows (repo secrets, `workflow_dispatch` smoke run)
 - [ ] Prod Bungie app pointed at the prod domain
-- [ ] Prod smoke: board, detail, login, O1–O5; then remove seed data
+- [ ] Prod smoke: board, detail, login, O1–O5 (prod is never seeded — real clans only)
 - [ ] Error pages (global error boundary, BE-down state); README (setup, env vars, requests how-to)
 - [ ] Optional: custom domain (CNAME), Vercel Analytics
