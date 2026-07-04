@@ -68,11 +68,11 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 ## Phase B — Read path (API)
 
-### [TO DO] CR-6 — Search endpoint
+### [DONE] CR-6 — Search endpoint
 
-- [ ] `POST /api/clans/search`: repo query (AND across / OR within, ILIKE with `%_` escaping, size-tags via member_count, pagination, sort `updated_at DESC`) + service + route
-- [ ] `requests/clans.http`: per-filter examples
-- [ ] Integration tests: each filter, combinations, size-tag boundaries (19/20/50/51), pagination, 400s; unit: ILIKE escaping
+- [x] `POST /api/clans/search`: repo query (AND across / OR within, ILIKE with `%_` escaping, size-tags via member_count, pagination, sort `updated_at DESC`) + service + route
+- [x] `requests/clans.http`: per-filter examples
+- [x] Integration tests: each filter, combinations, size-tag boundaries (19/20/50/51), pagination, 400s; unit: ILIKE escaping
 
 **DoD:** endpoint matches api.md verbatim, verified via clans.http against seeded rows (manual insert ok until CR-8).
 

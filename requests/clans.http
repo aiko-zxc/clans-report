@@ -1,0 +1,46 @@
+### Our board API (search + detail). Anonymous. Pick the `local` environment
+# (status bar) and run `next dev`. Seed data first: npx tsx scripts/seed.ts (CR-8).
+
+@json = Content-Type: application/json
+
+### Search — no filters (whole board, page 1)
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "page": 1, "pageSize": 8 }
+
+### Search — by playstyle tags (OR within)
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "tags": ["PvE", "Raids"], "page": 1, "pageSize": 8 }
+
+### Search — combined filters (AND across categories)
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "languages": ["Russian"], "regions": ["EUROPE"], "membershipTypes": ["OPEN"], "page": 1, "pageSize": 8 }
+
+### Search — by name (case-insensitive substring)
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "name": "wolf", "page": 1, "pageSize": 8 }
+
+### Search — member-count range
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "minMembers": 20, "maxMembers": 50, "page": 1, "pageSize": 8 }
+
+### Search — page 2
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "page": 2, "pageSize": 8 }
+
+### Search — invalid (pageSize > 50 → 400 INVALID_REQUEST)
+POST {{baseUrl}}/api/clans/search
+{{json}}
+
+{ "page": 1, "pageSize": 99 }

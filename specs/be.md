@@ -407,8 +407,8 @@ jobs:
 ## Local development
 
 1. Register a **dev application** at bungie.net/en/Application: redirect `https://127.0.0.1:3000/api/auth/callback/bungie` (Bungie requires HTTPS and rejects the `localhost` hostname — `127.0.0.1` works; see auth.md).
-2. DB: `docker run -p 5432:5432 postgres:17` or a Neon dev branch. `npx drizzle-kit migrate`, then `npx tsx scripts/seed.ts` for board data.
-3. `.env.local` from `.env.example`.
+2. DB: `docker compose up -d` (local `postgres:17`, see `docker-compose.yml`). `npx drizzle-kit migrate`, then `npx tsx scripts/seed.ts` for board data.
+3. `.env` from `.env.example`.
 4. `next dev --experimental-https` — Next generates a locally-trusted cert; open `https://127.0.0.1:3000`. Full OAuth + publish flow works locally against real Bungie; **no tunnel needed** (the OAuth redirect is a browser-side 302 — Bungie's servers never connect to your machine).
 
 ## Deployment
