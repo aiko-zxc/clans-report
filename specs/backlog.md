@@ -58,11 +58,11 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** integration smoke test green locally.
 
-### [TO DO] CR-5 — Manual requests kit
+### [DONE] CR-5 — Manual requests kit
 
-- [ ] `.vscode/settings.json`: REST Client environments (`local` / `local-https` / `prod`)
-- [ ] `.env.example` (`DATABASE_URL`, `BUNGIE_API_KEY`, `SESSION_COOKIE`, …); `requests/README.md`
-- [ ] `requests/bungie.http`: GetGroup, GetMembersOfGroup, GetGroupsForMember (file-level `@groupId`)
+- [x] `.vscode/settings.json`: REST Client environments (`local` / `local-https` / `prod`)
+- [x] `.env.example` (`DATABASE_URL`, `BUNGIE_API_KEY`, `SESSION_COOKIE`, …); `requests/README.md`
+- [x] `requests/bungie.http`: GetGroup, GetMembersOfGroup, GetGroupsForMember (file-level `@groupId`)
 
 **DoD:** with a real API key in `.env`, all three Bungie requests return live JSON from VS Code.
 

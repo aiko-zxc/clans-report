@@ -1,0 +1,21 @@
+### Bungie API — direct calls for exploring real response shapes.
+# VS Code REST Client. Needs BUNGIE_API_KEY in .env (see requests/README.md).
+# These are the three public, API-key-only endpoints our sync-service + founder
+# check consume. Edit @groupId / @bungieNetId to point at a real clan / account.
+
+@bungieBase = https://www.bungie.net/Platform
+@groupId = 4407748
+@bungieNetId = 19626321
+
+### GetGroup — basic clan info (S1 cron + publish/edit snapshot + preview)
+GET {{bungieBase}}/GroupV2/{{groupId}}/
+X-API-Key: {{$dotenv BUNGIE_API_KEY}}
+
+### GetMembersOfGroup — member list (S2 cron)
+GET {{bungieBase}}/GroupV2/{{groupId}}/Members/
+X-API-Key: {{$dotenv BUNGIE_API_KEY}}
+
+### GetGroupsForMember — founder check (login + publish/edit verification)
+# membershipType 254 = Bungie.net. Returns the user's clan(s) + isFounder-ish data.
+GET {{bungieBase}}/GroupV2/User/254/{{bungieNetId}}/0/1/
+X-API-Key: {{$dotenv BUNGIE_API_KEY}}
