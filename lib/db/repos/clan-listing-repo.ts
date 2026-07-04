@@ -2,6 +2,7 @@ import { and, desc, eq, exists, gte, ilike, inArray, lte, sql } from 'drizzle-or
 import { db } from '@/lib/db/client';
 import {
   bungieClanSnapshot,
+  bungieMemberSnapshot,
   clanListing,
   clanListingPlatform,
   clanListingPlaystyleTag,
@@ -15,6 +16,33 @@ export interface ClanCard {
   bannerUrl: string | null;
   memberCount: number;
   tags: string[];
+}
+
+export interface ClanMember {
+  destinyId: string;
+  displayName: string | null;
+  displayNameCode: number | null;
+  iconPath: string | null;
+}
+
+export interface ClanDetail {
+  bungieGroupId: string;
+  name: string;
+  motto: string | null;
+  description: string | null;
+  bannerUrl: string | null;
+  memberCount: number;
+  clanLevel: { current: number | null; max: number | null };
+  membershipType: string;
+  bungieCreatedAt: string;
+  founder: { displayName: string | null; displayNameCode: number | null };
+  language: string;
+  region: string;
+  tags: string[];
+  platforms: string[];
+  contacts: { discordUrl: string | null };
+  members: ClanMember[];
+  dataFetchedAt: string;
 }
 
 // Board search: AND across filter categories, OR within each (flow.md V2).
@@ -88,6 +116,81 @@ export async function searchClans(
 
   const items = await attachTags(rows);
   return { items, total };
+}
+
+// Full public detail for one clan. Returns null if there's no published listing
+// for the group (never published, or delisted) → route maps to 404.
+export async function getClanDetail(bungieGroupId: string): Promise<ClanDetail | null> {
+  const [row] = await db
+    .select({
+      listingId: clanListing.id,
+      bungieGroupId: clanListing.bungieGroupId,
+      language: clanListing.language,
+      region: clanListing.region,
+      discordUrl: clanListing.discordUrl,
+      name: bungieClanSnapshot.name,
+      motto: bungieClanSnapshot.motto,
+      description: bungieClanSnapshot.description,
+      bannerUrl: bungieClanSnapshot.bannerUrl,
+      memberCount: bungieClanSnapshot.memberCount,
+      clanLevel: bungieClanSnapshot.clanLevel,
+      clanLevelMax: bungieClanSnapshot.clanLevelMax,
+      membershipType: bungieClanSnapshot.membershipType,
+      founderDestinyId: bungieClanSnapshot.founderDestinyId,
+      bungieCreatedAt: bungieClanSnapshot.bungieCreatedAt,
+      fetchedAt: bungieClanSnapshot.fetchedAt,
+    })
+    .from(clanListing)
+    .innerJoin(bungieClanSnapshot, eq(clanListing.bungieGroupId, bungieClanSnapshot.bungieGroupId))
+    .where(eq(clanListing.bungieGroupId, bungieGroupId));
+
+  if (!row) return null;
+
+  const [tagRows, platformRows, memberRows] = await Promise.all([
+    db
+      .select({ tag: clanListingPlaystyleTag.tag })
+      .from(clanListingPlaystyleTag)
+      .where(eq(clanListingPlaystyleTag.clanListingId, row.listingId)),
+    db
+      .select({ platform: clanListingPlatform.platform })
+      .from(clanListingPlatform)
+      .where(eq(clanListingPlatform.clanListingId, row.listingId)),
+    db
+      .select({
+        destinyId: bungieMemberSnapshot.destinyId,
+        displayName: bungieMemberSnapshot.displayName,
+        displayNameCode: bungieMemberSnapshot.displayNameCode,
+        iconPath: bungieMemberSnapshot.iconPath,
+      })
+      .from(bungieMemberSnapshot)
+      .where(eq(bungieMemberSnapshot.bungieGroupId, bungieGroupId)),
+  ]);
+
+  // Founder display resolved from the member snapshot (founder is always a member).
+  const founderMember = memberRows.find((m) => m.destinyId === row.founderDestinyId);
+
+  return {
+    bungieGroupId: row.bungieGroupId,
+    name: row.name,
+    motto: row.motto,
+    description: row.description,
+    bannerUrl: row.bannerUrl,
+    memberCount: row.memberCount,
+    clanLevel: { current: row.clanLevel, max: row.clanLevelMax },
+    membershipType: row.membershipType,
+    bungieCreatedAt: row.bungieCreatedAt.toISOString(),
+    founder: {
+      displayName: founderMember?.displayName ?? null,
+      displayNameCode: founderMember?.displayNameCode ?? null,
+    },
+    language: row.language,
+    region: row.region,
+    tags: tagRows.map((t) => t.tag),
+    platforms: platformRows.map((p) => p.platform),
+    contacts: { discordUrl: row.discordUrl },
+    members: memberRows,
+    dataFetchedAt: row.fetchedAt.toISOString(),
+  };
 }
 
 async function attachTags(

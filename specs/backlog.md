@@ -76,10 +76,10 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** endpoint matches api.md verbatim, verified via clans.http against seeded rows (manual insert ok until CR-8).
 
-### [TO DO] CR-7 — Detail endpoint
+### [DONE] CR-7 — Detail endpoint
 
-- [ ] `GET /api/clans/{bungieGroupId}`: full `ClanDetail` (members, founder resolution, `dataFetchedAt`), `404 LISTING_NOT_FOUND`
-- [ ] clans.http entries (detail + 404); integration tests
+- [x] `GET /api/clans/{bungieGroupId}`: full `ClanDetail` (members, founder resolution, `dataFetchedAt`), `404 LISTING_NOT_FOUND`
+- [x] clans.http entries (detail + 404); integration tests
 
 ### [TO DO] CR-8 — Seed script (local only)
 

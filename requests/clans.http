@@ -44,3 +44,9 @@ POST {{baseUrl}}/api/clans/search
 {{json}}
 
 { "page": 1, "pageSize": 99 }
+
+### Detail — one clan (replace the id with a real bungieGroupId from search)
+GET {{baseUrl}}/api/clans/900001
+
+### Detail — unknown id → 404 LISTING_NOT_FOUND
+GET {{baseUrl}}/api/clans/999999999
