@@ -49,12 +49,12 @@ Dependencies: phases are sequential; tickets inside a phase are sequential unles
 
 **DoD:** `npm test` green; pure code — reviewable without running anything.
 
-### [TO DO] CR-4 — Test harness
+### [DONE] CR-4 — Test harness
 
-- [ ] Vitest `globalSetup`: one `postgres:17` Testcontainer per run, migrations applied once
-- [ ] Truncate-between-tests helper; MSW node server stub + first Bungie response factory
-- [ ] One smoke integration test (insert via repo → read back)
-- [ ] `ci.yml` written (test + migrate jobs) — verified later in CR-23
+- [x] Vitest `globalSetup`: one `postgres:17` Testcontainer per run, migrations applied once
+- [x] Truncate-between-tests helper; MSW node server stub + first Bungie response factory
+- [x] One smoke integration test (insert via repo → read back)
+- [x] `ci.yml` written (test + migrate jobs) — verified later in CR-23
 
 **DoD:** integration smoke test green locally.
 
