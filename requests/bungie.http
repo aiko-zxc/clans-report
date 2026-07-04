@@ -4,7 +4,7 @@
 # check consume. Edit @groupId / @bungieNetId to point at a real clan / account.
 
 @bungieBase = https://www.bungie.net/Platform
-@groupId = 4407748
+@groupId = 4683673
 @bungieNetId = 19626321
 
 ### GetGroup — basic clan info (S1 cron + publish/edit snapshot + preview)
